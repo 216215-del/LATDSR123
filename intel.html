@@ -1,10 +1,289 @@
-</html>
-<html>
-  <head>
-    <title>Latihan wawan html</title>
-  </head>
-  <body>
-    <h4>Ini judul artikel wardah</h4>
-    <p>Ini paragraf awal dari halaman html punya april yang sedang memakan kerang</p>
-  </body>
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Berita</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700;900&amp;family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    
+    .headline-font {
+      font-family: 'Merriweather', Georgia, serif;
+    }
+    
+    .body-font {
+      font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+    
+    .breaking-badge {
+      animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: .7;
+      }
+    }
+    
+    .article-dropcap::first-letter {
+      font-size: 3.5em;
+      font-weight: 700;
+      line-height: 0.8;
+      float: left;
+      margin: 0.1em 0.1em 0 0;
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full body-font">
+  <div id="app" class="w-full h-full overflow-auto"></div>
+  <script>
+    const defaultConfig = {
+      background_color: "#ffffff",
+      accent_color: "#dc2626",
+      text_color: "#1f2937",
+      header_color: "#111827",
+      link_color: "#2563eb",
+      font_family: "Merriweather",
+      font_size: 16,
+      site_title: "BERITA TERKINI",
+      main_headline: "Teknologi AI Mengubah Cara Kita Bekerja dan Berkreasi",
+      headline_subtitle: "Inovasi kecerdasan buatan membuka peluang baru di berbagai industri dan menghadirkan tantangan etika yang perlu dipertimbangkan",
+      article_content: "Jakarta - Perkembangan teknologi kecerdasan buatan (AI) telah mencapai titik kritis yang mengubah lanskap pekerjaan dan kreativitas manusia. Dari asisten virtual hingga algoritma pembelajaran mesin yang canggih, AI kini hadir di hampir setiap aspek kehidupan modern.\n\nMenurut para ahli teknologi, dampak AI tidak hanya terbatas pada efisiensi operasional, tetapi juga membuka dimensi baru dalam kreativitas dan inovasi. Banyak perusahaan mulai mengintegrasikan AI untuk meningkatkan produktivitas, menganalisis data kompleks, dan bahkan menciptakan konten kreatif.\n\nNamun, kemajuan ini juga menghadirkan pertanyaan etika yang mendalam. Bagaimana kita memastikan AI digunakan secara bertanggung jawab? Apa dampaknya terhadap lapangan pekerjaan tradisional? Dan bagaimana kita menjaga privasi dan keamanan data di era digital ini?\n\nPemerintah dan organisasi internasional mulai merumuskan regulasi untuk mengatur penggunaan AI, dengan fokus pada transparansi, akuntabilitas, dan perlindungan hak asasi manusia. Sementara itu, industri teknologi terus berinovasi, menciptakan solusi yang lebih canggih dan mudah diakses.\n\nKe depan, kolaborasi antara manusia dan AI diprediksi akan menjadi norma baru. Kunci suksesnya terletak pada pendidikan, adaptasi, dan pemahaman mendalam tentang potensi serta batasan teknologi ini.",
+      author_name: "Sarah Wijaya",
+      footer_text: "© 2024 Portal Berita Terkini. Hak Cipta Dilindungi."
+    };
+
+    function onConfigChange(config) {
+      const app = document.getElementById('app');
+      
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const headerColor = config.header_color || defaultConfig.header_color;
+      const linkColor = config.link_color || defaultConfig.link_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+      
+      const siteTitle = config.site_title || defaultConfig.site_title;
+      const mainHeadline = config.main_headline || defaultConfig.main_headline;
+      const headlineSubtitle = config.headline_subtitle || defaultConfig.headline_subtitle;
+      const articleContent = config.article_content || defaultConfig.article_content;
+      const authorName = config.author_name || defaultConfig.author_name;
+      const footerText = config.footer_text || defaultConfig.footer_text;
+      
+      const paragraphs = articleContent.split('\n\n').filter(p => p.trim());
+      const currentDate = new Date().toLocaleDateString('id-ID', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+      
+      app.style.backgroundColor = backgroundColor;
+      app.style.fontFamily = `${fontFamily}, Georgia, serif`;
+      
+      app.innerHTML = `
+        <div class="w-full min-h-full" style="background-color: ${backgroundColor};">
+          <!-- Header -->
+          <header class="border-b-4" style="border-color: ${accentColor}; background-color: ${headerColor};">
+            <div class="max-w-5xl mx-auto px-6 py-6">
+              <div class="flex items-center justify-between">
+                <h1 class="headline-font font-black tracking-tight" style="color: ${backgroundColor}; font-size: ${fontSize * 1.75}px;">
+                  ${siteTitle}
+                </h1>
+                <div class="body-font text-sm" style="color: ${backgroundColor}; opacity: 0.9; font-size: ${fontSize * 0.8}px;">
+                  ${currentDate}
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <!-- Breaking Badge -->
+          <div class="max-w-5xl mx-auto px-6 py-4">
+            <div class="inline-flex items-center breaking-badge px-4 py-2 rounded-full" style="background-color: ${accentColor};">
+              <span class="body-font font-bold uppercase text-xs tracking-wide" style="color: ${backgroundColor}; font-size: ${fontSize * 0.7}px;">
+                🔴 Breaking News
+              </span>
+            </div>
+          </div>
+
+          <!-- Main Article -->
+          <article class="max-w-5xl mx-auto px-6 py-8">
+            <!-- Headline -->
+            <h2 class="headline-font font-black leading-tight mb-4" style="color: ${headerColor}; font-size: ${fontSize * 2.5}px;">
+              ${mainHeadline}
+            </h2>
+            
+            <!-- Subtitle -->
+            <p class="body-font text-xl leading-relaxed mb-6" style="color: ${textColor}; opacity: 0.8; font-size: ${fontSize * 1.25}px;">
+              ${headlineSubtitle}
+            </p>
+
+            <!-- Meta Info -->
+            <div class="flex items-center gap-4 py-4 mb-6 border-t border-b" style="border-color: ${textColor}; opacity: 0.3;">
+              <div class="flex items-center gap-2">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: ${accentColor};">
+                  <span class="body-font font-bold" style="color: ${backgroundColor}; font-size: ${fontSize * 0.9}px;">
+                    ${authorName.charAt(0)}
+                  </span>
+                </div>
+                <div>
+                  <div class="body-font font-semibold" style="color: ${headerColor}; font-size: ${fontSize * 0.9}px;">
+                    ${authorName}
+                  </div>
+                  <div class="body-font text-sm" style="color: ${textColor}; opacity: 0.6; font-size: ${fontSize * 0.75}px;">
+                    Wartawan Senior
+                  </div>
+                </div>
+              </div>
+              <div class="body-font text-sm ml-auto" style="color: ${textColor}; opacity: 0.6; font-size: ${fontSize * 0.8}px;">
+                📖 5 menit baca
+              </div>
+            </div>
+
+            <!-- Article Content -->
+            <div class="article-content space-y-6">
+              ${paragraphs.map((para, idx) => `
+                <p class="${idx === 0 ? 'article-dropcap' : ''} body-font leading-relaxed" style="color: ${textColor}; font-size: ${fontSize}px; line-height: 1.8;">
+                  ${para}
+                </p>
+              `).join('')}
+            </div>
+
+            <!-- Tags -->
+            <div class="flex flex-wrap gap-2 mt-8 pt-6 border-t" style="border-color: ${textColor}; opacity: 0.2;">
+              ${['Teknologi', 'AI', 'Inovasi', 'Bisnis', 'Digital'].map(tag => `
+                <span class="body-font px-4 py-2 rounded-full text-sm font-medium transition-colors hover:opacity-80" 
+                      style="background-color: ${accentColor}; background-opacity: 0.1; color: ${accentColor}; font-size: ${fontSize * 0.8}px;">
+                  #${tag}
+                </span>
+              `).join('')}
+            </div>
+          </article>
+
+          <!-- Related Articles -->
+          <section class="max-w-5xl mx-auto px-6 py-8 border-t" style="border-color: ${textColor}; opacity: 0.2;">
+            <h3 class="headline-font font-bold mb-6" style="color: ${headerColor}; font-size: ${fontSize * 1.5}px;">
+              Berita Terkait
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+              ${[
+                { title: 'Startup Lokal Raih Pendanaan', time: '2 jam lalu' },
+                { title: 'Tren Digital Marketing 2024', time: '4 jam lalu' },
+                { title: 'Keamanan Siber di Era Modern', time: '6 jam lalu' }
+              ].map(article => `
+                <a href="#" class="group block p-4 rounded-lg transition-colors hover:shadow-lg" 
+                   style="border: 2px solid ${textColor}; border-opacity: 0.1; background-color: ${backgroundColor};">
+                  <h4 class="body-font font-semibold mb-2 group-hover:opacity-80 transition-opacity" 
+                      style="color: ${linkColor}; font-size: ${fontSize}px;">
+                    ${article.title}
+                  </h4>
+                  <p class="body-font text-sm" style="color: ${textColor}; opacity: 0.6; font-size: ${fontSize * 0.8}px;">
+                    🕐 ${article.time}
+                  </p>
+                </a>
+              `).join('')}
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="border-t-2 mt-12" style="border-color: ${accentColor}; background-color: ${headerColor};">
+            <div class="max-w-5xl mx-auto px-6 py-8 text-center">
+              <p class="body-font" style="color: ${backgroundColor}; opacity: 0.8; font-size: ${fontSize * 0.9}px;">
+                ${footerText}
+              </p>
+            </div>
+          </footer>
+        </div>
+      `;
+    }
+
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.header_color || defaultConfig.header_color,
+            set: (value) => {
+              config.header_color = value;
+              window.elementSdk.setConfig({ header_color: value });
+            }
+          },
+          {
+            get: () => config.link_color || defaultConfig.link_color,
+            set: (value) => {
+              config.link_color = value;
+              window.elementSdk.setConfig({ link_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["site_title", config.site_title || defaultConfig.site_title],
+        ["main_headline", config.main_headline || defaultConfig.main_headline],
+        ["headline_subtitle", config.headline_subtitle || defaultConfig.headline_subtitle],
+        ["article_content", config.article_content || defaultConfig.article_content],
+        ["author_name", config.author_name || defaultConfig.author_name],
+        ["footer_text", config.footer_text || defaultConfig.footer_text]
+      ]);
+    }
+
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9bdc82a2748cf44c',t:'MTc2ODM4NzE3NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
